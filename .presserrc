@@ -1,0 +1,9 @@
+{
+  "origin": "127.0.0.1",
+  "sourcePath": "/Users/dougwoodrow/Developer/Knightspeed/knightspeed-website-5.0/wp-app/",
+  "targetPath": "/Users/dougwoodrow/Developer/Common/presser/test-deploy",
+  "sshKeyFilePath": "/Users/dougwoodrow/.ssh/id_rsa",
+  "sshPort": 22,
+  "sshUsername": "dougwoodrow",
+  "scaffoldProjectGitUrl": ""
+}
