@@ -1,0 +1,45 @@
+version: '2'
+services:
+  wordpress:
+    image: wordpress:fpm
+    environment:
+      ENVIRONMENT: development
+      WP_HOME: http://127.0.0.1:4000
+      WP_SITEURL: http://127.0.0.1:4000
+      URL_API_BASE: http://127.0.0.1:8000/api
+      DB_PASSWORD: password
+      DB_USER: wordpress
+      DB_HOST: db
+      DB_NAME: wordpress
+    volumes:
+      - ./wp-app:/var/www/html
+    networks:
+    - wordpress-network
+    links:
+    - db:mysql
+  nginx:
+    image: raulr/nginx-wordpress
+    ports:
+    - "4000:80"
+    environment:
+      POST_MAX_SIZE: 1024m 
+    volumes_from:
+    - wordpress
+    networks:
+    - wordpress-network
+    links:
+    - wordpress
+  db:
+    image: mariadb:latest
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - ./wp-data:/docker-entrypoint-initdb.d
+    networks:
+      - wordpress-network
+networks:
+  wordpress-network:
+      driver: bridge
